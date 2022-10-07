@@ -1,0 +1,12 @@
+{
+	"zimlet": {
+		"label": "Undo Send",
+		"description": "Undo the sending of an email message"
+	},
+	"zimbra-zimlet-undosend": {
+		"title": "Undo Send",
+		"fail": "Undo Send failed",
+		"conversation": "Please select specific message in bottom more menu. Can not work on conversation"
+	}
+}
+

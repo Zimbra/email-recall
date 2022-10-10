@@ -178,7 +178,7 @@ public class Undosend extends ExtensionHttpHandler {
                     if (checkPermission(pm, account)) {
                         System.out.println("Undo sending of message:" + pm.getMessageID());
                         String messageID = pm.getMessageID().replace("<", "").replace(">", "");
-                        String regex = "^[a-zA-Z0-9.@]+$"; //Example Zimbra generated id: 1889798574.2.1597394282373.JavaMail.zimbra@barrydegraaff.tk
+                        String regex = "^[a-zA-Z0-9.@-]+$"; //Example Zimbra generated id: 1889798574.2.1597394282373.JavaMail.zimbra@barrydegraaff.tk
                         Pattern pattern = Pattern.compile(regex);
                         Matcher matcher = pattern.matcher(messageID);
                         if ((matcher.matches()) && (messageID.length() > 40)) {

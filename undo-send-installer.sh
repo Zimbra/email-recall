@@ -12,7 +12,8 @@ fi
 ln -s /bin/echo /usr/bin/echo
 ln -s /bin/sed /usr/bin/sed
 
-apt -y install wget
+apt -y install wget uuid-runtime
+yum install -y wget util-linux
 
 rm -Rf /opt/zimbra/lib/ext/undosend
 mkdir -p /opt/zimbra/lib/ext/undosend

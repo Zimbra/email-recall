@@ -26,6 +26,6 @@ So use value from Message-Id header without <>. Please note, this command line s
 
 The java extension for use with the Zimlet does verify the From header against the user's account email address and aliasses.
 
-## Limit undo send time
+## Change the undo send time limit
 
-To limit the time in which people can undo send, add `after:-$2minutes` to the query in undosend script if you wish to pass the undosend time usage a CLI argument or just hardcode it.
+To change the time in which people can undo send, change `after:-5minutes` to your desired value in the query in undosend script `/usr/local/sbin/undosend`.

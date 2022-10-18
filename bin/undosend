@@ -22,7 +22,7 @@ SRFILE="$(mktemp /tmp/searchandremove.XXXXXXXX.txt)"
 #TODO: Add the time stamp back into the search query
 #after:-$2minutes
 
-mapfile -t VA < <(/opt/zimbra/bin/zmmboxsearch -m "*" -q "(is:anywhere msgid:$1)" | egrep -v "Address|Date|Size|Folder|Flags|Fragment|Conv|\)")
+mapfile -t VA < <(/opt/zimbra/bin/zmmboxsearch -m "*" -q "(is:anywhere after:-5minutes msgid:$1)" | egrep -v "Address|Date|Size|Folder|Flags|Fragment|Conv|\)")
 len=${#VA[@]}
 
 while [[ $i -lt $len ]]; do

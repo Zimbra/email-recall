@@ -25,7 +25,7 @@ export default class MoreMenu extends Component {
         }
 
         var request = new XMLHttpRequest();
-        var url = '/service/extension/undosend';
+        var url = this.zimletContext.zimbraOrigin + '/service/extension/undosend';
         var formData = new FormData();       
         formData.append("jsondata", JSON.stringify(this.props.emailData));
         request.open('POST', url);

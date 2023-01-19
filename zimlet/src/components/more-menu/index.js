@@ -1,6 +1,5 @@
 import { createElement, Component } from 'preact';
 import { withIntl } from '../../enhancers';
-//import style from './style';
 import {  ActionMenuItem } from '@zimbra-client/components';
 import { withText } from 'preact-i18n';
 

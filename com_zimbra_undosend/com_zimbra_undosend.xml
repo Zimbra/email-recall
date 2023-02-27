@@ -1,0 +1,4 @@
+<zimlet name="com_zimbra_undosend" version="0.0.1" label="Undo send" description="Undo the sending of an email message" target="main view-window">
+	<include>com_zimbra_undosend.js</include>
+	<handlerObject>com_zimbra_undosend_HandlerObject</handlerObject>
+</zimlet>

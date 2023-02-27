@@ -2,6 +2,8 @@
 
 The undo send Zimlet is a proof of concept not-production ready Zimlet. It allows a user to recall a message that has already been sent. The Zimlet works by running a `zmmboxsearch` on your Zimbra server and look for messages with the message-id of the message to recall. It will remove the message from all mailboxes and place a notification message telling the users a message has been recalled. The Zimlet can not undo the sending of messages that are already on 3rd party mail servers.
 
+Both a Classic and Modern UI Zimlet are available.
+
 ## Installing
 
 To perform the installation you can run the auto installation script as root as follows:

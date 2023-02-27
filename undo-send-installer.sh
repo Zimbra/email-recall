@@ -25,5 +25,10 @@ chmod +x /usr/local/sbin/undosend
 wget https://github.com/Zimbra/undosend/releases/download/0.0.1/zimbra-zimlet-undosend.zip -O /tmp/zimbra-zimlet-undosend.zip
 chown zimbra:zimbra /tmp/zimbra-zimlet-undosend.zip
 
+wget https://github.com/Zimbra/undosend/releases/download/0.0.2/com_zimbra_undosend.zip -O /tmp/com_zimbra_undosend.zip
+chown zimbra:zimbra /tmp/com_zimbra_undosend.zip
+
+
 su zimbra -c "/opt/zimbra/bin/zmzimletctl deploy /tmp/zimbra-zimlet-undosend.zip"
+su zimbra -c "/opt/zimbra/bin/zmzimletctl deploy /tmp/com_zimbra_undosend.zip"
 su zimbra -c "/opt/zimbra/bin/zmmailboxdctl restart"

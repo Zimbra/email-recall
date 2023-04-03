@@ -44,7 +44,7 @@ public class UndosendExtension implements ZimbraExtension {
      * @throws com.zimbra.common.service.ServiceException
      */
     public void init() throws ServiceException {
-        ExtensionDispatcherServlet.register(this, new Undosend());
+        ExtensionDispatcherServlet.register(this, new UndosendHandler());
     }
 
     /**

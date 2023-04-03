@@ -21,30 +21,27 @@ package com.zimbra.undosend;
 
 import com.zimbra.common.mime.shim.JavaMailMimeMessage;
 import com.zimbra.common.util.ZimbraLog;
-import com.zimbra.cs.extension.ExtensionHttpHandler;
-import com.zimbra.cs.account.Provisioning;
 import com.zimbra.cs.account.Account;
 import com.zimbra.cs.account.AuthToken;
-
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.zimbra.cs.account.Provisioning;
+import com.zimbra.cs.extension.ExtensionHttpHandler;
 import com.zimbra.cs.mime.ParsedMessage;
 import com.zimbra.cs.servlet.util.AuthUtil;
 import com.zimbra.cs.util.JMSession;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
-public class Undosend extends ExtensionHttpHandler {
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class UndosendHandler extends ExtensionHttpHandler {
 
     /**
      * The path under which the handler is registered for an extension.
@@ -115,17 +112,6 @@ public class Undosend extends ExtensionHttpHandler {
         }
     }
 
-    private static void execCommand(List<String> command) {
-        try {
-            ProcessBuilder pb = new ProcessBuilder(command);
-            Process p = pb.start();
-            p.waitFor();
-        } catch (Exception e) {
-            ZimbraLog.extensions.info(e);
-            System.out.println("com.zimbra.undosend execCommand error");
-        }
-    }
-
     private static boolean checkPermission(ParsedMessage pm, Account account) {
         try {
             String[] aliases = account.getAliases();
@@ -158,9 +144,7 @@ public class Undosend extends ExtensionHttpHandler {
                 HttpURLConnection connection;
 
                 uri = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/service/home/~/?auth=co&id=" + mailObject.getString("id");
-
                 url = new URL(uri);
-
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
                 connection.setUseCaches(false);
@@ -171,7 +155,6 @@ public class Undosend extends ExtensionHttpHandler {
                 connection.setRequestProperty("Cookie", "ZM_AUTH_TOKEN=" + authToken.getEncoded() + ";");
                 connection.setUseCaches(false);
 
-
                 if (connection.getResponseCode() == 200) {
                     MimeMessage message = new JavaMailMimeMessage(JMSession.getSession(), connection.getInputStream());
                     ParsedMessage pm = new ParsedMessage(message, false);
@@ -181,10 +164,10 @@ public class Undosend extends ExtensionHttpHandler {
                         String regex = "^[a-zA-Z0-9.@-]+$"; //Example Zimbra generated id: 1889798574.2.1597394282373.JavaMail.zimbra@barrydegraaff.tk
                         Pattern pattern = Pattern.compile(regex);
                         Matcher matcher = pattern.matcher(messageID);
+
                         if ((matcher.matches()) && (messageID.length() > 40)) {
-                            List<String> cmd = new ArrayList<>(List.of("/usr/local/sbin/undosend"));
-                            cmd.add(messageID);
-                            execCommand(cmd);
+                            UndosendService utility = new UndosendService();
+                            utility.getResult(messageID);
                         } else {
                             System.out.println("com.zimbra.undosend Message-Id format invalid, someone hacking here?");
                             throw new Exception("com.zimbra.undosend Message-Id format invalid, someone hacking here?");

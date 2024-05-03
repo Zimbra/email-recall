@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "zimbra-zimlet-undosend",
+  "name": "zimbra-zimlet-email-recall",
   "version": "1.0.0",
   "license": "BSD-3",
-  "description": "Undo the sending of an email message",
+  "description": "Recall the sending of an email message",
   "main": "build/index.js",
   "module": "src/index.js",
   "scripts": {

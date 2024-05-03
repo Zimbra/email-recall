@@ -17,26 +17,26 @@ along with this program.  If not, see http://www.gnu.org/licenses/.
 /**
  * This zimlet checks for X-Vade-Undo Send message header and displays unsubscribe button when found.
  */
-function com_zimbra_undosend_HandlerObject() {
+function com_zimbra_email_recall_HandlerObject() {
 }
 
-com_zimbra_undosend_HandlerObject.prototype = new ZmZimletBase();
-com_zimbra_undosend_HandlerObject.prototype.constructor = com_zimbra_undosend_HandlerObject;
+com_zimbra_email_recall_HandlerObject.prototype = new ZmZimletBase();
+com_zimbra_email_recall_HandlerObject.prototype.constructor = com_zimbra_email_recall_HandlerObject;
 
 /**
  * Simplify handler object
  */
-var UndoSendZimlet = com_zimbra_undosend_HandlerObject;
+var EmailRecallZimlet = com_zimbra_email_recall_HandlerObject;
 
 /**
  * Initializes the zimlet.
  */
-UndoSendZimlet.prototype.init =
+EmailRecallZimlet.prototype.init =
 function() {
 };
 
-UndoSendZimlet.prototype._handleUndoSendZimletMenuClick = function(controller) {
-   var zimletInstance = appCtxt._zimletMgr.getZimletByName('com_zimbra_undosend').handlerObject;
+EmailRecallZimlet.prototype._handleEmailRecallZimletMenuClick = function(controller) {
+   var zimletInstance = appCtxt._zimletMgr.getZimletByName('com_zimbra_email_recall').handlerObject;
    //Get selected mail message
    var items = controller.getSelection();
    if(!items instanceof Array) {
@@ -78,7 +78,7 @@ UndoSendZimlet.prototype._handleUndoSendZimletMenuClick = function(controller) {
  * @param {string} text - the message to display
  * @param {string} type - the style of the message e.g. ZmStatusView.LEVEL_INFO, ZmStatusView.LEVEL_WARNING, ZmStatusView.LEVEL_CRITICAL
  * */
-UndoSendZimlet.prototype.status = function(text, type) {
+EmailRecallZimlet.prototype.status = function(text, type) {
    var transitions = [ ZmToast.FADE_IN, ZmToast.PAUSE, ZmToast.PAUSE, ZmToast.PAUSE, ZmToast.FADE_OUT ];
    appCtxt.getAppController().setStatusMsg(text, type, null, transitions);
 }; 
@@ -89,7 +89,7 @@ UndoSendZimlet.prototype.status = function(text, type) {
  * Also this avoids having to deal with multiple instances of toolbars and buttons.
  * 
  * */
-UndoSendZimlet.prototype.onMsgView = function (msg, oldMsg, msgView) { 
+EmailRecallZimlet.prototype.onMsgView = function (msg, oldMsg, msgView) { 
    try {
       var app = appCtxt.getCurrentApp();
       var controller = app.getMailListController();
@@ -99,7 +99,7 @@ UndoSendZimlet.prototype.onMsgView = function (msg, oldMsg, msgView) {
          //When the user forwards emails as eml with attachments, there will be a toolbar, but that one
          //has no getButton method... resulting in a pop-up where the attachments cannot be clicked
          try {
-            var getButton = toolbar.getButton('UndoSendZimletButton')
+            var getButton = toolbar.getButton('EmailRecallZimletButton')
          } catch (err) {}
          
          if ((getButton) && (!getButton.isDisposed() ))
@@ -116,8 +116,8 @@ UndoSendZimlet.prototype.onMsgView = function (msg, oldMsg, msgView) {
                image: "zimbraicon", //icon
                enabled: true //default if undefined is true, defining it for documentation purpose
             };
-            var button = toolbar.createOp("UndoSendZimletButton", buttonArgs);
-            button.addSelectionListener(new AjxListener(this, this._handleUndoSendZimletMenuClick, controller));
+            var button = toolbar.createOp("EmailRecallZimletButton", buttonArgs);
+            button.addSelectionListener(new AjxListener(this, this._handleEmailRecallZimletMenuClick, controller));
          }
       }      
    } catch (err) {}
@@ -125,7 +125,7 @@ UndoSendZimlet.prototype.onMsgView = function (msg, oldMsg, msgView) {
    //Only work on messages in the Sent folder
    if(msg.folderId !== "5")
    {
-      var button = toolbar.getButton('UndoSendZimletButton');  
+      var button = toolbar.getButton('EmailRecallZimletButton');  
       button.dispose();
       button.setEnabled(false); 
       return;
